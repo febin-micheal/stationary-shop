@@ -36,6 +36,7 @@ def item(request, pk = None):
 
         form = ItemForm
         item_list = list(Item.objects.all().values())
+        item_store = list(Item.objects.all().values("store__name"))
         page = {
             'form': form,
             'item_list': item_list
