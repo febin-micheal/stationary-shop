@@ -1,0 +1,25 @@
+<title>Stationary Items</title>
+<h1>Stationary Items</h1>
+
+{% block content %}
+<form action="/item/" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Create</button>
+</form>
+
+<table>
+    <tr>
+        <th>Item name</th>
+        <th>Store name</th>
+    </tr>
+    {% for item in item_list %}
+    <tr>
+        <td>{{ item.name }} </td>
+        <td>{{ item.store }} </td>
+        <td><a href="/item/{{ item.id }}"><button type="button">Delete</button> </a> </td>
+        <td><a href="/item/{{ item.id }}"><button type="button">Update</button> </a> </td>
+    </tr>
+    {% endfor %}    
+</table>
+{% endblock %}
