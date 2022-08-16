@@ -1,52 +1,70 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from .models import *
 from .forms import *
 
 # Create your views here.
 
 def store(request, pk = None):
-
-    if request.method == 'GET':
-        if pk != None:
-            store = Store.objects.get(id = pk)
+    if pk != None:
+        store = Store.objects.get(id = pk)
+        if request.POST.get('delete') == 'delete':
             store.delete()
 
-        form = StoreForm
-        store_list = list(Store.objects.all().values())
-        page = {
-            'form': form,
-            'store_list': store_list
-        }
+        elif request.POST.get('edit') == 'edit':
+            form = StoreForm(instance = store)
 
-        return render(request, 'app2/store.html', page)
+            return render(request, 'app2/store_update.html', {'form': form, 'store': store})  
 
-    elif request.method == 'POST':
+        elif request.POST.get('update') == 'update':
+            form = StoreForm(request.POST, instance = store)
+            if form.is_valid():
+                form.save()          
+
+    else:  
         form = StoreForm(request.POST)
         if form.is_valid():
-            Store.objects.create(**form.cleaned_data)
-        
-        return redirect('store')
+            form.save()
+
+    form = StoreForm
+    store_list = list(Store.objects.all().values())
+    page = {
+        'form': form,
+        'store_list': store_list
+    }
+
+    return render(request, 'app2/store.html', page)
 
 def item(request, pk = None):
-
-    if request.method == 'GET':
-        if pk != None:
-            item = Item.objects.get(id = pk)
+    if pk != None:
+        item = Item.objects.get(id = pk)
+        if request.POST.get('delete') == 'delete':
             item.delete()
 
-        form = ItemForm
-        item_list = list(Item.objects.all().values())
-        item_store = list(Item.objects.all().values("store__name"))
-        page = {
-            'form': form,
-            'item_list': item_list
-        }
+        elif request.POST.get('edit') == 'edit':
+            form = ItemForm(instance = item)
 
-        return render(request, 'app2/item.html', page)
+            return render(request, 'app2/item_update.html', {'form': form, 'item': item})  
 
-    elif request.method == 'POST':
+        elif request.POST.get('update') == 'update':
+            form = ItemForm(request.POST, instance = item)
+            if form.is_valid():
+                form.save()          
+
+    else:  
         form = ItemForm(request.POST)
         if form.is_valid():
-            Item.objects.create(**form.cleaned_data)
-        
-        return redirect('item')
+            form.save()
+
+    form = ItemForm
+    item_list = list(Item.objects.all().values())
+    store_list = list(Store.objects.all().values())
+    for item in item_list:
+        for store in store_list:
+            if item['store_id'] == store['id']:
+                item['store__name'] = store['name']
+    page = {
+        'form': form,
+        'item_list': item_list,
+    }
+
+    return render(request, 'app2/item.html', page)

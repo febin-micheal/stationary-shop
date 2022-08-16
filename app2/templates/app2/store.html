@@ -5,7 +5,7 @@
 <form action="/store/" method="post">
     {% csrf_token %}
     {{ form }}
-    <button type="submit">Create</button>
+    <button type="submit" name="insert" value="insert">Insert</button>
 </form>
 
 <table>
@@ -15,8 +15,14 @@
     {% for store in store_list %}
     <tr>
         <td>{{ store.name }} </td>
-        <td><a href="/store/{{ store.id }}"><button type="button">Delete</button> </a> </td>
-        <td><a href="/store/{{ store.id }}"><button type="button">Update</button> </a> </td>
+        <form action="/store/{{ store.id }}", method="post">
+            {% csrf_token %}
+            <td><button type="submit" name="delete" value="delete">Delete</button> </td>
+        </form>
+        <form action="/store/{{ store.id }}", method="post">
+            {% csrf_token %}
+            <td><button type="submit" name="edit" value="edit">Edit</button> </td>    
+        </form>
     </tr>
     {% endfor %}    
 </table>

@@ -1,0 +1,8 @@
+<title>Edit Store</title>
+<h1>Update Store</h1>
+
+<form action="/store/{{store.id}} " method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit" name="update" value="update">Update</button>
+</form>
