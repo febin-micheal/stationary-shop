@@ -59,7 +59,7 @@ def item(request, pk = None):
             form.save()
 
     form = ItemForm
-    item_list = list(Item.objects.all().values('name', 'store__name'))
+    item_list = list(Item.objects.all().values('id', 'name', 'store__name'))
 
     page = {
         'form': form,
