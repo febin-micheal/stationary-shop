@@ -1,18 +1,22 @@
 {% extends 'base.html' %}
+{% block head %}
 <title>Stationary Items</title>
 <h1>Stationary Items</h1>
+{% endblock %}
 
 {% block content %}
 <form action="/item/" method="post">
     {% csrf_token %}
     {{ form }}
-    <button type="submit" name="insert" value="insert">Insert</button>
+    <button type="submit" name="method" value="insert">Insert</button>
 </form>
 
-<table class="table">
+<table class="table table-striped">
     <tr>
         <th>Item name</th>
         <th>Store name</th>
+        <th></th>
+        <th></th>
     </tr>
     {% for item in item_list %}
     <tr>
@@ -20,13 +24,14 @@
         <td>{{ item.store__name }} </td>
         <form action="/item/{{ item.id }}", method="post">
             {% csrf_token %}
-            <td><button type="submit" name="delete" value="delete">Delete</button> </td>
+            <td><button type="submit" name="method" value="delete">Delete</button> </td>
         </form>
         <form action="/item/{{ item.id }}", method="post">
             {% csrf_token %}
-            <td><button type="submit" name="edit" value="edit">Edit</button> </td>    
+            <td><button type="submit" name="method" value="edit">Edit</button> </td>    
         </form>
     </tr>
     {% endfor %}    
 </table>
+<a href="/">Return Home</a>
 {% endblock %}

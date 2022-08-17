@@ -1,30 +1,35 @@
 {% extends 'base.html' %}
+{% block head %}
 <title>Stationary Stores</title>
 <h1>Stationary Stores</h1>
+{% endblock %}
 
 {% block content %}
 <form action="/store/" method="post">
     {% csrf_token %}
     {{ form }}
-    <button type="submit" name="insert" value="insert">Insert</button>
+    <button type="submit" name="method" value="insert">Insert</button>
 </form>
 
-<table class="table">
+<table class="table table-striped">
     <tr>
         <th>Store name</th>
+        <th></th>
+        <th></th>
     </tr>
     {% for store in store_list %}
     <tr>
         <td>{{ store.name }} </td>
         <form action="/store/{{ store.id }}", method="post">
             {% csrf_token %}
-            <td><button type="submit" name="delete" value="delete">Delete</button> </td>
+            <td><button type="submit" name="method" value="delete">Delete</button> </td>
         </form>
         <form action="/store/{{ store.id }}", method="post">
             {% csrf_token %}
-            <td><button type="submit" name="edit" value="edit">Edit</button> </td>    
+            <td><button type="submit" name="method" value="edit">Edit</button> </td>    
         </form>
     </tr>
     {% endfor %}    
 </table>
+<a href="/">Return Home</a>
 {% endblock %}
