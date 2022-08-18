@@ -17,14 +17,14 @@
         <th></th>
         <th></th>
     </tr>
-    {% for store in store_list %}
+    {% for object in object_list %}
     <tr>
-        <td>{{ store.name }} </td>
-        <form action="/store/{{ store.id }}", method="post">
+        <td>{{ object.name }} </td>
+        <form action="/store/{{ object.id }}", method="post">
             {% csrf_token %}
             <td><button type="submit" name="method" value="delete">Delete</button> </td>
         </form>
-        <form action="/store/{{ store.id }}", method="post">
+        <form action="/store/{{ object.id }}", method="post">
             {% csrf_token %}
             <td><button type="submit" name="method" value="edit">Edit</button> </td>    
         </form>
