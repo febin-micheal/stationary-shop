@@ -2,7 +2,7 @@ from re import template
 from django.shortcuts import render, redirect
 from .models import *
 from .forms import *
-from django.http import HttpResponseRedirect, HttpResponse
+
 # Create your views here.
 
 def home(request):
