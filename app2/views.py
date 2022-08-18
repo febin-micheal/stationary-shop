@@ -1,4 +1,3 @@
-from re import template
 from django.shortcuts import render, redirect
 from .models import *
 from .forms import *
@@ -103,7 +102,6 @@ class ModelView(View):
                 form = self.form_class(request.POST, instance = object)
                 if form.is_valid():
                     form.save()          
-
 
         return redirect(self.success_url)
         
