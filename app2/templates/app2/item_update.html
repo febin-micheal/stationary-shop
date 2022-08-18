@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
+{% block head %}
 <title>Edit Item</title>
 <h1>Update Item</h1>
+{% endblock %}
 
 {% block content %}
 <form action="/item/{{item.id}} " method="post">
