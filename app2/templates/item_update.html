@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>Edit Item</title>
+<h1>Update Item</h1>
+{% endblock %}
+
+{% block content %}
+<form action="{% url 'item_update' object.id %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit" name="method" value="update">Update</button>
+</form>
+{% endblock %}

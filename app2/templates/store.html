@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>Stationary Stores</title>
+<h1>Stationary Stores</h1>
+{% endblock %}
+
+{% block content %}
+<form action="{% url 'store_list' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit" name="method" value="insert">Insert</button>
+</form>
+
+<table class="table table-striped">
+    <tr>
+        <th>Store name</th>
+        <th></th>
+        <th></th>
+    </tr>
+    {% for object in object_list %}
+    <tr>
+        <td>{{ object.name }} </td>
+        <form action="{% url 'store_delete' object.id %}", method="post">
+            {% csrf_token %}
+            <td><button type="submit" name="method" value="delete">Delete</button> </td>
+        </form>
+        <form action="{% url 'store_update' object.id %}", method="post">
+            {% csrf_token %}
+            <td><button type="submit" name="method" value="edit">Edit</button> </td>    
+        </form>
+    </tr>
+    {% endfor %}    
+</table>
+<a href="/">Return Home</a>
+{% endblock %}

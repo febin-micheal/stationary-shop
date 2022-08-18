@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>Home</title>
+<h1>Stationary Shop</h1>
+{% endblock %}
+
+{% block content %}
+<p><a href="{% url 'store_list' %}">Stationary Stores</a></p>
+<p><a href="{% url 'item_list' %}">Stationary Items</a></p>
+{% endblock %}
