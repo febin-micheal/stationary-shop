@@ -5,10 +5,10 @@
 {% endblock %}
 
 {% block content %}
-<form action="{% url 'item_list' %}" method="post">
-    {% csrf_token %}
+<form action="{{ success_url }}{{ id }}" method="post">
+        {% csrf_token %}
     {{ form }}
-    <button type="submit" name="method" value="insert">Insert</button>
+    <button type="submit" name="method" value="update">{{ method }}</button>
 </form>
 
 <table class="table table-striped">

@@ -10,14 +10,17 @@ def home(request):
 
 class ModelView(View):
     
-    def get(self, request, *args, **kwargs):
-        form = self.form_class
-        object_list = list(self.model.objects.all().values(*self.fields))
-        page = {
-            'form': form,
-            'object_list': object_list
+    def __init__(self):
+        self.page = {
+            'form': self.form_class,
+            'success_url': self.success_url,
+            'method': 'Insert'
         }
-        return render(request, self.template_name, page)
+
+    def get(self, request, *args, **kwargs):
+        self.page['object_list'] = list(self.model.objects.all().values(*self.fields))
+
+        return render(request, self.template_name, self.page)
 
     def post(self, request, pk = None, *args, **kwargs):
         
@@ -32,9 +35,10 @@ class ModelView(View):
                 object.delete()
 
             elif request.POST.get('method') == 'edit':
-                form = self.form_class(instance = object)
-
-                return render(request, self.template_edit, {'form': form, 'object': object})  
+                self.page['form'] = self.form_class(instance = object)
+                self.page['method'] = 'Update'
+                self.page['success_url'] = self.update_url
+                self.page['id'] = object.id
 
             elif request.POST.get('method') == 'update':
                 form = self.form_class(request.POST, instance = object)
@@ -48,11 +52,13 @@ class StoreView(ModelView):
     template_name = 'store.html'
     model = Store
     fields = ['id', 'name']
-    template_edit = 'store_update.html'
+    success_url = '/store/'
+    update_url = '/store/update/'
 
 class ItemView(ModelView):
     form_class = ItemForm
     template_name = 'item.html'
     model = Item
     fields = ['id', 'name', 'store__name']
-    template_edit = 'item_update.html'
+    success_url = '/item/'
+    update_url = '/item/update/'
