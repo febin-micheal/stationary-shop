@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from .models import *
 from .forms import *
 from django.views import View
@@ -41,13 +41,12 @@ class ModelView(View):
                 if form.is_valid():
                     form.save()          
 
-        return redirect(self.success_url)
+        return self.get(request, *args, **kwargs)
         
 class StoreView(ModelView):
     form_class = StoreForm
     template_name = 'store.html'
     model = Store
-    success_url = 'store_list'
     fields = ['id', 'name']
     template_edit = 'store_update.html'
 
@@ -55,6 +54,5 @@ class ItemView(ModelView):
     form_class = ItemForm
     template_name = 'item.html'
     model = Item
-    success_url = 'item_list'
     fields = ['id', 'name', 'store__name']
     template_edit = 'item_update.html'
