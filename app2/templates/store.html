@@ -8,7 +8,7 @@
 <form action="{{ success_url }}{{ id }}" method="post">
         {% csrf_token %}
     {{ form }}
-    <button type="submit" name="method" value="update">{{ method }}</button>
+    <button type="submit" name="method" value="update">{{ button }}</button>
 </form>
 
 <table class="table table-striped">

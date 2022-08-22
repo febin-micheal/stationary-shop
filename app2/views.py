@@ -14,7 +14,7 @@ class ModelView(View):
         self.page = {
             'form': self.form_class,
             'success_url': self.success_url,
-            'method': 'Insert'
+            'button': 'Insert'
         }
 
     def get(self, request, *args, **kwargs):
@@ -36,7 +36,7 @@ class ModelView(View):
 
             elif request.POST.get('method') == 'edit':
                 self.page['form'] = self.form_class(instance = object)
-                self.page['method'] = 'Update'
+                self.page['button'] = 'Update'
                 self.page['success_url'] = self.update_url
                 self.page['id'] = object.id
 
